@@ -51,7 +51,7 @@ public class AssetsController {
 		
 	}
 	
-	@PostMapping("/agregar")
+	@PostMapping("/add")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<String> agregarAsset(@Valid @RequestBody Asset request) {
 		assetService.newAsset(request);

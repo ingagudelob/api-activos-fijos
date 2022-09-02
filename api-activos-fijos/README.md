@@ -25,3 +25,209 @@ Diseñar una API RESTFul1 que permite administrar los activos, esta debería per
 - 👉 Java y Spring Boot
 - 👉 Tecnología REST
 - 👉 Maven
+
+### Repositorio - GitHub
+
+- 👉 [Github](https://github.com/ingagudelob/api-activos-fijos.git)
+
+## Requerimientos técnicos
+
+## 1. Modelado de Base de Datos
+
+Se utiliza base de datos relacinal para el proyecto y como gestor se utilizó MySQL.
+
+**Asset:** deberá tener:
+
+     - assetNumber
+     - name
+     - description
+     - width
+     - height
+     - weight
+     - length
+     - type
+     - purchasePrice
+     - purchaseDate
+     - dependency
+     - serial
+
+**Area:** deberá tener:
+
+    - codArea
+    - nameArea
+    - city
+
+**Employe:** deberá tener:
+
+    - codEmploye
+    - nameEmploye
+
+## 2. Role Admin
+
+### PATHS habilitados para la adminstración de los Activos fijos:
+
+| METHOD | PATH                                                 |
+| ------ | ---------------------------------------------------- |
+| POST   | http://localhost:9000/api/asset/add                  |
+| PUT    | http://localhost:9000/api/asset/update               |
+| GET    | http://localhost:9000/api/asset/{numberAsset}        |
+| GET    | http://localhost:9000/api/asset/serial/?serial=      |
+| GET    | http://localhost:9000/api/asset/type/?type=          |
+| GET    | http://localhost:9000/api/asset/date/?purchase_date= |
+
+## 2.1 Crear nuevos Activos
+
+### POST (add)
+
+    http://localhost:9000/api/asset/add
+
+Ejemplo:
+{
+"name": "Monitor",
+"description": "Samsung 19' S19B300 " ,
+"type": "Equipos de oficina",
+"serial": "SN32131",
+"weight": 8.9,
+"height": 70.5,
+"width": 60.30,
+"length": 50.0,
+"purchasePrice": 280000,
+"purchaseDate":"2022-05-03",
+"dependency": "Jaime Agudelo"
+}
+
+### PUT (Update)
+
+Este metodo recibe todo el Modelo e internamente existe la validación para identificacion de numberAsset. Criterio para actualización:
+
+    http://localhost:9000/api/asset/update
+
+Ejemplo:
+{  
+ "assetNumber": 4,
+"name": "Escritorio",
+"serial":"SN1234",
+"type": "Equipos de oficina",
+"description": "Mueble en L de 3 piezas - Gerencial",
+"purchasePrice": 382000
+}
+
+### GET (Find by Serial)
+
+    http://localhost:9000/api/asset/serial/?serial=SN1234
+
+Respuesta: Devuelve un modelo unico
+{
+"assetNumber": 4,
+"name": "Escritorio",
+"description": "Mueble en L de 3 piezas - Gerencial",
+"type": "Equipos de oficina",
+"serial": "SN1234",
+"weight": 8.9,
+"height": 70.5,
+"width": 60.3,
+"length": 1.5,
+"dependency": "Santa Marta",
+"purchasePrice": 382000.0,
+"purchaseDate": "2022-05-02"
+}
+
+### GET (Find by Type)
+
+    http://localhost:9000/api/asset/type/?type=Equipo de oficina
+
+Respuesta: Devuelve una Lista
+
+    [
+    {
+        "assetNumber": 1,
+        "name": "Portail",
+        "description": "ASUS de 14 pulgadas 8th Gn",
+        "type": "Equipos de oficina",
+        "serial": "SNL9071",
+        "weight": 0.1,
+        "height": 0.15,
+        "width": 0.3,
+        "length": 0.3,
+        "dependency": "Jaime Agudelo",
+        "purchasePrice": 1350000.0,
+        "purchaseDate": "2022-07-01"
+    },
+    {
+        "assetNumber": 4,
+        "name": "Escritorio",
+        "description": "Mueble en L de 3 piezas - Gerencial",
+        "type": "Equipos de oficina",
+        "serial": "SN1234",
+        "weight": 8.9,
+        "height": 70.5,
+        "width": 60.3,
+        "length": 1.5,
+        "dependency": "Santa Marta",
+        "purchasePrice": 382000.0,
+        "purchaseDate": "2022-05-02"
+    },
+    {
+        "assetNumber": 5,
+        "name": "Monitor",
+        "description": "Samsung 19' S19B300 ",
+        "type": "Equipos de oficina",
+        "serial": "SN32131",
+        "weight": 8.9,
+        "height": 70.5,
+        "width": 60.3,
+        "length": 50.0,
+        "dependency": "Medellín",
+        "purchasePrice": 280000.0,
+        "purchaseDate": "2022-05-02"
+    }
+
+]
+
+### GET (Find by Date)
+
+    http://localhost:9000/api/asset/date/?purchase_date=2022-05-02
+
+Respuesta: Devuelve una Lista
+
+    [
+    {
+        "assetNumber": 4,
+        "name": "Escritorio",
+        "description": "Mueble en L de 3 piezas - Gerencial",
+        "type": "Equipos de oficina",
+        "serial": "SN1234",
+        "weight": 8.9,
+        "height": 70.5,
+        "width": 60.3,
+        "length": 1.5,
+        "dependency": "Santa Marta",
+        "purchasePrice": 382000.0,
+        "purchaseDate": "2022-05-02"
+    },
+    {
+        "assetNumber": 5,
+        "name": "Monitor",
+        "description": "Samsung 19' S19B300 ",
+        "type": "Equipos de oficina",
+        "serial": "SN32131",
+        "weight": 8.9,
+        "height": 70.5,
+        "width": 60.3,
+        "length": 50.0,
+        "dependency": "Medellín",
+        "purchasePrice": 280000.0,
+        "purchaseDate": "2022-05-02"
+    }
+
+]
+
+## 3. Reglas
+
+### Las respuestas HTTP de la API estan estandarizadas así:
+
+    - 200 Por consultas exitosas
+    - 400 Para reportar datos faltantes al crear o actualizar un activo.
+    - 404 para búsquedas sin resultados.
+    - 500 Para errores que pasen en la capa de backend.
+    - Todas las respuestas deben contener una descripción o resumen de lo ocurrido.
