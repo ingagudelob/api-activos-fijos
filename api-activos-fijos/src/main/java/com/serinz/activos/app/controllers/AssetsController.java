@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.serinz.activos.app.entitys.Asset;
 import com.serinz.activos.app.services.IAssetService;
 
+
+/**
+ * Controlador de para el modelo de Asset
+ * @author ing_j
+ *
+ */
 @RestController
 @RequestMapping("api/asset")
 @CrossOrigin(origins = "*")
@@ -30,6 +37,11 @@ public class AssetsController {
 	@Autowired
 	private IAssetService assetService;
 
+	
+	/**
+	 * Peticion GET para obtener el listado de lo Activos fijos
+	 * @return Devuelve una lista con todos lo Activos
+	 */
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Asset>> getAsset() {
@@ -37,9 +49,15 @@ public class AssetsController {
 		return ResponseEntity.ok(listAsset);
 	}
 	
-	@GetMapping("/{assetNumber}")
+	/**
+	 * Peticion GET para obtener el listado de lo Activos fijos segun su numero de activo fijo
+	 * @param assetNumber Recibe como parametro para la obtencion del activo en particular
+	 * @return Retorna un status y el objeto con la información solicitada en caso de ser positivo, en el caso de 
+	 * no encontrar algun registro devuelve el status BAD_REQUES y un mensaje al body
+	 */
+	@GetMapping(value={"/{assetNumber:[0-9]}"})
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<?> findAssetByID(@PathVariable Long assetNumber){
+	public ResponseEntity<?> findAssetByID(@PathVariable(value = "assetNumber", required= true) Long assetNumber){
 		try {
 			Asset assetFind = assetService.findById(assetNumber); 
 			return ResponseEntity.status(HttpStatus.OK).body(assetFind);
@@ -51,6 +69,11 @@ public class AssetsController {
 		
 	}
 	
+	/**
+	 * Peticion POST para agregar o crear un activo fijo
+	 * @param request recibe como parametro un objeto JSON con la información a traves del body.
+	 * @return Devuelve el HttpStatu CREATED en caso de ser positivo y un mensaje a traves del body.
+	 */
 	@PostMapping("/add")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<String> agregarAsset(@Valid @RequestBody Asset request) {
@@ -58,6 +81,11 @@ public class AssetsController {
 		return ResponseEntity.status(HttpStatus.CREATED).body("Activo creado correctamente");
 	}
 
+	/**
+	 * Peticion PUT para la actualización de la información que puede ser editada de un activo fijo
+	 * @param request Recibe como parametro un Objeto JSON con la información a actualizar
+	 * @return Devuelve HttpStatus y un mensaje a traves del body
+	 */
 	@PutMapping("/update")
 	public ResponseEntity<String> updateAsset(@RequestBody Asset request) {
 		

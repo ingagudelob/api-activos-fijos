@@ -30,6 +30,12 @@ Diseñar una API RESTFul1 que permite administrar los activos, esta debería per
 
 - 👉 [Github](https://github.com/ingagudelob/api-activos-fijos.git)
 
+### Para ejecutar la API 👇🏻
+
+- Descargar el proyecto o clonarlo.
+- Abrir la consola e ir a la carpeta del proyecto.
+- Ejecute estos comandos: `mvn clean install` y luego `mvn spring-boot:run` .
+
 ## Requerimientos técnicos
 
 ## 1. Modelado de Base de Datos
@@ -111,6 +117,14 @@ Ejemplo:
 "description": "Mueble en L de 3 piezas - Gerencial",
 "purchasePrice": 382000
 }
+
+### GET (Find by Serial)
+
+Este metodo recibe como parametro un valor numérico. En caso de recibir un valor diferente vamos a obtener como respuesta un Status 404. NOY_FOUND.
+
+    http://localhost:9000/api/asset/serial/
+
+Respuesta: Devuelve un modelo unico
 
 ### GET (Find by Serial)
 
