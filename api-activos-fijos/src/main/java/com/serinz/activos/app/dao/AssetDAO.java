@@ -6,4 +6,6 @@ import com.serinz.activos.app.entitys.Asset;
 
 public interface AssetDAO extends JpaRepository<Asset, Long> {
 
+
 }
+

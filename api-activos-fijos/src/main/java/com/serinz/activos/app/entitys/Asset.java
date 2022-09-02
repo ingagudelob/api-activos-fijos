@@ -12,6 +12,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name="assets")
 public class Asset {
@@ -21,7 +24,7 @@ public class Asset {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long assetNumber;
 	
-	@NotBlank(message = "Name cannot be empty.")  
+	@NotBlank(message = "Nombre no puede ser NULO o VACIO")  
 	private String name;
 	
     @Size(min = 10, max = 100, message = "Description must be between 10 and 100 characters long")

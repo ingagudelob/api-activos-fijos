@@ -11,5 +11,8 @@ public interface IAssetService {
 	public Asset newAsset(Asset addAsset);
 	public Asset updateAsset(Asset putAsset);
 	public String deleteAssetById(Long id);
+	public List<Asset> findByType(String type);
+	public Asset findAssetBySerial(String serial);
+	public List<Asset> findAssetByDate(String purchase_date);
 
 }

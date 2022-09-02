@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,15 +31,24 @@ public class AssetsController {
 	private IAssetService assetService;
 
 	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Asset>> getAsset() {
 		List<Asset> listAsset = assetService.getAsset();
 		return ResponseEntity.ok(listAsset);
 	}
 	
 	@GetMapping("/{assetNumber}")
-	public ResponseEntity<Asset> findAssetByID(@PathVariable Long assetNumber){
-		Asset assetFind = assetService.findById(assetNumber); 
-		return ResponseEntity.ok(assetFind);
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> findAssetByID(@PathVariable Long assetNumber){
+		try {
+			Asset assetFind = assetService.findById(assetNumber); 
+			return ResponseEntity.status(HttpStatus.OK).body(assetFind);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("/Error/ - El Activo no existe en la base de datos");
+			// TODO: handle exception
+		}
+		
 	}
 	
 	@PostMapping("/agregar")
@@ -85,6 +95,25 @@ public class AssetsController {
 			return "No econtrado";
 		}
 		return null;
+	}
+	
+	@GetMapping("/serial")
+	@ResponseStatus(HttpStatus.OK)
+	public Asset getAssetSerial(@RequestParam String serial){
+		Asset assetSerial = assetService.findAssetBySerial(serial);
+		return assetSerial;
+	}
+	
+	@GetMapping("/date")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Asset> getAssetDate(@RequestParam String purchase_date){
+			return assetService.findAssetByDate(purchase_date);
+	}
+	
+	@GetMapping("/type")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Asset> getAssetType(@RequestParam String type){
+			return assetService.findByType(type);
 	}
 	
 	
