@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.serinz.activos.app.entitys.Asset;
 
+/**
+ * Interface - Etapa de servicio
+ * @author ing_j
+ *
+ */
 public interface IAssetService {
 
 	public List<Asset> getAsset();

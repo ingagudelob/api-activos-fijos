@@ -7,9 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,28 +93,27 @@ public class AssetsController {
 		assetEditar.setPurchasePrice(request.getPurchasePrice());
 		assetEditar.setSerial(request.getSerial());
 		assetEditar.setType(request.getType());
-		assetEditar.setDependency(request.getDependency());
+		//assetEditar.setCity(request.getCity());
 		
 		assetService.updateAsset(assetEditar);
 		return ResponseEntity.status(HttpStatus.OK).body("Activo " + request.getName() + " ha sido actualizado");
 	}
 	
-	@DeleteMapping("delete/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public String assetsDelete(@PathVariable Long id) {
-		assetService.deleteAssetById(id);
-		return "Eliminado correctamente activo con id: "+ id;
-	}
 	
-	@GetMapping("/del/{id}")
+	/**
+	 * Peticion GET  y Metodo para eliminar un Activo Fijo a partir de un id o assetNumber
+	 * @param asset_number Recibe un parametro para realiza consulta y la eliminación
+	 * @return devuelve un HttpStatus.NO_CONTENT y un texto en el body
+	 */
+	@GetMapping("/del/{asset_number}")
 	@ResponseStatus(HttpStatus.OK)
-	public String del(@PathVariable Long id) {
+	public String del(@PathVariable Long asset_number) {
 		
 		try {
-			Asset delClient = assetService.findById(id);
-			if (delClient.getAssetNumber() == id) {
-				assetService.deleteAssetById(id);
-				return "Eliminado correctamente activo con id: "+ id;
+			Asset delClient = assetService.findById(asset_number);
+			if (delClient.getAssetNumber() == asset_number) {
+				assetService.deleteAssetById(asset_number);
+				return "Eliminado correctamente activo con id: "+ asset_number;
 				
 			}
 		} catch (Exception e) {
@@ -125,6 +122,11 @@ public class AssetsController {
 		return null;
 	}
 	
+	/**
+	 * Peticion GET para realizar consulta de u activo fijo a partir de un parametro recibido (serial)
+	 * @param serial Recibe un parametro para realizar la consulta
+	 * @return Devuelve un HttpStatus.OK y el activo fijo consultado en caso de ser afirmativo.
+	 */
 	@GetMapping("/serial")
 	@ResponseStatus(HttpStatus.OK)
 	public Asset getAssetSerial(@RequestParam String serial){
@@ -132,12 +134,22 @@ public class AssetsController {
 		return assetSerial;
 	}
 	
+	/**
+	 * Peticion GET para realizar consulta de u activo fijo a partir de un parametro recibido (fecha de compra)
+	 * @param purchase_date Recibe un parametro para realizar la consulta
+	 * @return Devuelve un HttpStatus.OK y el activo fijo consultado en caso de ser afirmativo.
+	 */
 	@GetMapping("/date")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Asset> getAssetDate(@RequestParam String purchase_date){
 			return assetService.findAssetByDate(purchase_date);
 	}
 	
+	/**
+	 * Peticion GET para realizar consulta de u activo fijo a partir de un parametro recibido (tipo de activo)
+	 * @param type Recibe un parametro para realizar la consulta
+	 * @return Devuelve un HttpStatus.OK y el activo fijo consultado en caso de ser afirmativo.
+	 */
 	@GetMapping("/type")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Asset> getAssetType(@RequestParam String type){

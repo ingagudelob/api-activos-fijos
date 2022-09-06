@@ -4,6 +4,12 @@ import org.springframework.http.HttpStatus;
 
 import lombok.Data;
 
+
+/**
+ * Clase  de contrucción para la configuración para la captura de excepciones del tipo INTERNAL_SERVER_ERROR
+ * @author ing_j
+ *
+ */
 @Data
 public class InternalServerError extends RuntimeException {
 	

@@ -9,7 +9,11 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-
+/**
+ * Clase del tipo Entity para el Modelo Employes
+ * @author ing_j
+ *
+ */
 @Data
 @Entity
 @Table(name = "employes")
@@ -18,7 +22,7 @@ public class Employe {
 	@Id
 	@Column(name="cod_employe")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Long codEmploye;
+	public int codEmploye;
 	
 	@Column(name="name_employe", nullable = false)
 	public String nameEmploye;

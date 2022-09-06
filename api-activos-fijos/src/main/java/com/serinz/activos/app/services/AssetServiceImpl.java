@@ -14,6 +14,11 @@ import com.serinz.activos.app.dao.AssetDAO;
 import com.serinz.activos.app.dao.assetDaoQuery;
 import com.serinz.activos.app.entitys.Asset;
 
+/**
+ * Etapa de Implementación de los servicios para las peticiones Http
+ * @author ing_j
+ *
+ */
 @Service
 public class AssetServiceImpl implements IAssetService {
 
@@ -57,9 +62,9 @@ public class AssetServiceImpl implements IAssetService {
 		if (addAsset.getType() == null || addAsset.getType().isEmpty()) {
 			throw new BadRequestException("/Error/ - El tipo no puede ser nulo o vacío");
 		}
-		if (addAsset.getDependency() == null || addAsset.getDependency().isEmpty()) {
-			throw new BadRequestException("/Error/ - La dependencia no puede ser nula o vacía");
-		}
+		//if (addAsset.getCity() == null) {
+		//	throw new BadRequestException("/Error/ - La dependencia no puede ser nula o vacía");
+		//}
 		if (addAsset.getPurchasePrice() == null) {
 			throw new BadRequestException("/Error/ - El precio de compra no puede ser nulo o vacío");
 		}
