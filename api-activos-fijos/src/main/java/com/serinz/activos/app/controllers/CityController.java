@@ -23,6 +23,11 @@ import com.serinz.activos.app.dao.CityDAO;
 import com.serinz.activos.app.entitys.City;
 import com.serinz.activos.app.services.cities.ICityService;
 
+/**
+ * Etapa de controlador para las peticiones Htpp para el Modelo City
+ * @author ing_j
+ *
+ */
 @RestController
 @RequestMapping("/api/city")
 @CrossOrigin(origins = "*")

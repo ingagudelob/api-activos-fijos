@@ -1,0 +1,10 @@
+com.serinz.activos.app
+com.serinz.activos.app.configs
+com.serinz.activos.app.configs.exceptions
+com.serinz.activos.app.controllers
+com.serinz.activos.app.dao
+com.serinz.activos.app.entitys
+com.serinz.activos.app.services
+com.serinz.activos.app.services.areas
+com.serinz.activos.app.services.cities
+com.serinz.activos.app.services.employes

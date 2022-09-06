@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.serinz.activos.app.entitys.Area;
 import com.serinz.activos.app.services.areas.IAreaService;
 
+/**
+ * Etapa de controlador para la peticiones Http para el modelo de Area
+ * @author ing_j
+ *
+ */
 @RestController
 @RequestMapping("/api/area")
 @CrossOrigin(origins = "*")
@@ -38,7 +43,7 @@ public class AreaController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<String> addArea(@Valid @RequestBody Area request) {
 		service.addArea(request);
-		return ResponseEntity.status(HttpStatus.CREATED).body("Área creada correctamente");
+		return ResponseEntity.status(HttpStatus.CREATED).body("Area creada correctamente");
 	}
 	
 	@PutMapping("/update")
